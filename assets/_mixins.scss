@@ -1,0 +1,6 @@
+@import "@/assets/_variables.scss";
+
+@mixin neuBorder($shadow-width: 2px) {
+  border-radius: 8px;
+  box-shadow: $shadow-width $shadow-width 0px 0px black;
+}
