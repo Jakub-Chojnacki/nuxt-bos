@@ -128,7 +128,7 @@ a.router-link-active {
     justify-content: space-between;
     width: 100%;
 
-    @media (min-width: $sm) {
+    @media (min-width: $md) {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -143,7 +143,7 @@ a.router-link-active {
       text-transform: uppercase;
       font-size: 1.25rem;
 
-      @media (min-width: $sm) {
+      @media (min-width: $md) {
         display: none;
       }
     }
@@ -151,7 +151,7 @@ a.router-link-active {
       display: none;
       width: 100%;
 
-      @media (min-width: $sm) {
+      @media (min-width: $md) {
         display: block;
       }
 
@@ -177,7 +177,7 @@ a.router-link-active {
   }
 
   &__logo-container {
-    @media (max-width: $sm) {
+    @media (max-width: $md) {
       order: 3;
     }
 
@@ -219,7 +219,7 @@ a.router-link-active {
       @include hamburgerBar(60%);
     }
 
-    @media (min-width: $sm) {
+    @media (min-width: $md) {
       display: none;
     }
   }
@@ -253,7 +253,7 @@ a.router-link-active {
       text-transform: uppercase;
     }
 
-    @media (min-width: $sm) {
+    @media (min-width: $md) {
       display: none;
     }
   }
