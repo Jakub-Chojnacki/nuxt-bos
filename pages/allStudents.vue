@@ -1,21 +1,11 @@
 <template>
-  <div>
-    <SearchBar />
-    <AddStudentButton />
-  </div>
-  <StudentList :studentsData="mockData" />
+  <StudentDashboard :status="status" />
 </template>
 
-<script lang="ts">
-import mockData from "@/static/mockData.json";
+<script setup lang="ts">
+import { studentStatuses } from "~/constants/student";
 
-export default {
-  setup() {
-    return {
-      mockData,
-    };
-  },
-};
+const status = studentStatuses.all;
 </script>
 
 <style lang="scss" scoped>
