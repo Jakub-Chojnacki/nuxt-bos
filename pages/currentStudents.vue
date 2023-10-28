@@ -1,28 +1,11 @@
 <template>
-  <div>
-    <SearchBar />
-    <AddStudentButton />
-  </div>
-  <StudentList :studentsData="currentStudents" />
+  <StudentDashboard :status="status" />
 </template>
 
-<script lang="ts">
-import { computed } from "vue";
-import mockData from "@/static/mockData.json";
-import { studentStatuses } from "@/constants/student";
+<script setup lang="ts">
+import { studentStatuses } from "~/constants/student";
 
-export default {
-  setup() {
-    const currentStudents = computed(() => {
-      return mockData.filter(
-        (student) => student.status === studentStatuses.current
-      );
-    });
-    return {
-      currentStudents,
-    };
-  },
-};
+const status = studentStatuses.current;
 </script>
 
 <style lang="scss" scoped>
