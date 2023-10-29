@@ -1,7 +1,9 @@
 <template>
+  <NuxtLink to="/students/create/">
   <button class="add-student">
     <Icon name="ic:baseline-plus" size="16" />
   </button>
+</NuxtLink>
 </template>
 
 <style lang="scss" scoped>

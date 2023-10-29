@@ -14,3 +14,12 @@
 	cursor: pointer;
 	outline: inherit;
 }
+
+@mixin neuButton(){
+	@include neuBorder();
+	border: 3px solid black;
+    padding: 0.5em 1.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+	cursor:pointer;
+}

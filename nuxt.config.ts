@@ -9,10 +9,14 @@ export default defineNuxtConfig({
     "~/assets/_mixins.scss",
     "~/assets/_variables.scss",
   ],
-  modules: ['nuxt-icon', '@nuxtjs/google-fonts'],
+  modules: ["nuxt-icon", "@formkit/nuxt", "@nuxtjs/google-fonts",],
   googleFonts: {
-    families:{
+    families: {
       Inter: [400, 700],
-    }
-  }
+    },
+  },
+  formkit: {
+    // Experimental support for auto loading (see note):
+    autoImport: true,
+  },
 });

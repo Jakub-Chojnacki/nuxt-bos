@@ -53,7 +53,7 @@ export default {
     const menuConfig: MenuItem[] = [
       {
         name: "Wszyscy studenci",
-        route: "allStudents",
+        route: "",
       },
       {
         name: "Aktualni studenci",
