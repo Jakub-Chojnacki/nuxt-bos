@@ -74,12 +74,12 @@ interface Props {
   student?: IStudent;
 }
 
-const { formType, student, toggleModal } = defineProps<Props>();
+const props = defineProps<Props>();
 const { useToast } = Toast;
 const toast = useToast();
 const studentsData = useStudentsData();
 
-const isPreview = formType === EStudentFormTypes.preview;
+const isPreview = props.formType === EStudentFormTypes.preview;
 
 const statusSelectOptions: ISelectOption[] = [
   {
@@ -103,7 +103,7 @@ const submitButtonClasses = isPreview
 const handleSubmit = async (fields: Omit<IStudent, "id">) => {
   const studentsArray = [...studentsData.value];
 
-  if (formType === EStudentFormTypes.create) {
+  if (props.formType === EStudentFormTypes.create) {
     const newStudent = { ...fields, id: Math.random() };
 
     studentsData.value = [...studentsArray, newStudent];
@@ -111,16 +111,16 @@ const handleSubmit = async (fields: Omit<IStudent, "id">) => {
     await navigateTo("/");
   }
 
-  if (formType === EStudentFormTypes.edit) {
-    if (!student) return;
+  if (props.formType === EStudentFormTypes.edit) {
+    if (!props.student) return;
     const currentStudentIndex = studentsData.value.findIndex(
-      ({ id }) => id === student.id
+      ({ id }) => id === props.student?.id
     );
-    const newStudentData = { id: student?.id, ...fields };
+    const newStudentData = { id: props.student?.id, ...fields };
     studentsArray[currentStudentIndex] = newStudentData;
     studentsData.value = studentsArray;
     toast.info("Dane studenta zostały zapisane!");
-    toggleModal();
+    props.toggleModal();
   }
 };
 </script>
