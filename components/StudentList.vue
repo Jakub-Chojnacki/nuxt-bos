@@ -11,6 +11,7 @@
 
 <script setup lang="ts">
 import { computed, defineProps } from "vue";
+import { useToast } from "vue-toastification";
 import { studentStatuses } from "~/constants/student";
 import type { EStudentFormTypes, IStudent, IStudentFormOpenPayload } from "@/types";
 
@@ -23,6 +24,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const { studentsData, status, searchTerm } = toRefs(props)
+const toast = useToast()
 
 watch(studentsData, ()=> localStudentsData.value = studentsData.value)
 
@@ -65,6 +67,7 @@ const handleDeleteStudent = (): void => {
   actionStudentId.value = null
   actionStudent.value = null
   openedFormType.value = null
+  toast.success('Dane o studencie zostały usunięte!')
   toggleModal()
 }
 
