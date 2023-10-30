@@ -1,13 +1,15 @@
 <template>
-  <div>
-    <SearchBar @search="handleSearch" />
-    <AddStudentButton />
+  <div class="dashboard">
+    <div class="dashboard__search-container">
+      <SearchBar @search="handleSearch" />
+      <AddStudentButton />
+    </div>
+    <StudentList
+      :studentsData="filteredData"
+      :status="props.status"
+      :searchTerm="searchTerm"
+    />
   </div>
-  <StudentList
-    :studentsData="filteredData"
-    :status="props.status"
-    :searchTerm="searchTerm"
-  />
 </template>
 
 <script setup lang="ts">
@@ -47,5 +49,18 @@ watchEffect(() => {
 
 <style lang="scss" scoped>
 @import "@/assets/_variables.scss";
-@import "@/assets/mixins.scss";
+
+.dashboard {
+  padding-bottom: 3em;
+  &__search-container {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+
+    @media (min-width: $lg) {
+      justify-content: flex-start;
+      margin-left: 1em;
+    }
+  }
+}
 </style>

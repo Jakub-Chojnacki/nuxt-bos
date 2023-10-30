@@ -2,7 +2,7 @@
   <Modal
     @close="toggleModal"
     :modalActive="modalActive"
-    :modalTitle="modalTitle"
+    modalTitle="Usunięcie danych o studencie"
   >
     <div class="container">
       <div class="delete-text">{{ studentText }}</div>
@@ -27,7 +27,6 @@ interface Props {
 const { modalActive, toggleModal, handleConfirm, student } =
   defineProps<Props>();
 
-const modalTitle = "Usunięcie danych o studencie";
 const studentText = ref(
   student
     ? `Czy na pewno chcesz usunąć dane o studencie ${student.name} ${student.surname} z numerem indeksu: ${student.student_id}?`

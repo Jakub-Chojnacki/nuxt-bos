@@ -74,7 +74,6 @@ interface Props {
 }
 
 const { formType, student, toggleModal } = defineProps<Props>();
-// const { $toast: toast } = useNuxtApp();
 const toast = useToast();
 const studentsData = useStudentsData();
 
