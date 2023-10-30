@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   typescript: {
-    typeCheck: true,
+    typeCheck: false, // temp solution, :true breaks builds : https://github.com/nuxt-modules/icon/issues/62
   },
   css: [
     "~/assets/main.scss",
