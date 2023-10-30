@@ -14,3 +14,19 @@ export interface IStudent {
   student_id: number;
   status: EStudentStatus;
 }
+
+export enum EStudentFormTypes {
+  preview = 'preview',
+  edit = 'edit',
+  create = 'create'
+}
+
+export interface IStudentFormOpenPayload {
+  type: EStudentFormTypes;
+  student:IStudent;
+}
+
+export interface ISelectOption  {
+  label: string,
+  value: string,
+}

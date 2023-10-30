@@ -7,8 +7,3 @@ import { studentStatuses } from "~/constants/student";
 
 const status = studentStatuses.current;
 </script>
-
-<style lang="scss" scoped>
-@import "@/assets/_variables.scss";
-@import "@/assets/mixins.scss";
-</style>
