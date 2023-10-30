@@ -65,7 +65,7 @@
 import { defineProps } from "vue";
 import { EStudentFormTypes, type ISelectOption, type IStudent } from "~/types";
 import { studentStatuses } from "~/constants/student";
-import { useToast } from "vue-toastification";
+import * as pkg from "vue-toastification"; //workaround https://github.com/Maronato/vue-toastification/issues/327
 
 interface Props {
   formType: EStudentFormTypes;
@@ -74,6 +74,7 @@ interface Props {
 }
 
 const { formType, student, toggleModal } = defineProps<Props>();
+const { useToast } = pkg;
 const toast = useToast();
 const studentsData = useStudentsData();
 
@@ -107,7 +108,6 @@ const handleSubmit = async (fields: Omit<IStudent, "id">) => {
     studentsData.value = [...studentsArray, newStudent];
     toast.success("Nowy student został dodany!");
     await navigateTo("/");
-
   }
 
   if (formType === EStudentFormTypes.edit) {
