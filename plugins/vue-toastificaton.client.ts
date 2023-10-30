@@ -1,9 +1,7 @@
-import { defineNuxtPlugin } from "#app";
-import * as pkg from "vue-toastification"; //workaround https://github.com/Maronato/vue-toastification/issues/327
-import "vue-toastification/dist/index.css"; // if needed
-
-const { Toast } = pkg;
+import { defineNuxtPlugin } from '#app'
+import Toast from 'vue-toastification'
+import 'vue-toastification/dist/index.css' // if needed
 
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.vueApp.use(Toast);
-});
+    nuxtApp.vueApp.use(Toast)
+})
