@@ -20,7 +20,6 @@ interface Props {
   student?: IStudent;
 }
 
-const { modalActive, toggleModal, modalTitle, formType, student } =
   defineProps<Props>();
 </script>
 

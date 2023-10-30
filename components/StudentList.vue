@@ -48,8 +48,8 @@ const { studentsData, status, searchTerm } = toRefs(props);
 const { useToast } = Toast;
 
 const toast = useToast();
+const studentsDataGlobal = useStudentsData();
 
-watch(studentsData, () => (localStudentsData.value = studentsData.value));
 
 const deleteModalActive = ref(false);
 const formModalActive = ref(false);
@@ -58,24 +58,25 @@ const actionStudent = ref<IStudent | null>(null);
 const actionStudentId = ref<number | null>(null);
 const openedFormType = ref<EStudentFormTypes | null>(null);
 
-const localStudentsData = ref<IStudent[]>(studentsData.value);
-
-const studentsDataGlobal = useStudentsData();
 
 const toggleModal = (): void => {
   deleteModalActive.value = !deleteModalActive.value;
 };
 
 const handleOpenModal = (student: IStudent): void => {
-  actionStudentId.value = student.id;
-  actionStudent.value = student;
+  const foundStudent = studentsDataGlobal.value.find((elem)=> elem.id === student.id)
+  if(!foundStudent) return
+  actionStudentId.value = foundStudent.id;
+  actionStudent.value = foundStudent;
   toggleModal();
 };
 
 const handleOpenForm = ({ type, student }: IStudentFormOpenPayload) => {
+  const foundStudent = studentsDataGlobal.value.find((elem)=> elem.id === student.id)
+  if(!foundStudent) return
   formModalTitle.value = type === "preview" ? "Podgląd" : "Edycja";
-  actionStudent.value = student;
-  actionStudentId.value = student.id;
+  actionStudent.value = foundStudent;
+  actionStudentId.value = foundStudent.id;
   formModalActive.value = true;
   openedFormType.value = type;
 };
@@ -88,9 +89,7 @@ const handleDeleteStudent = (): void => {
   studentsDataGlobal.value = studentsDataGlobal.value.filter(
     (student) => student.id !== actionStudentId.value
   );
-  localStudentsData.value = localStudentsData.value.filter(
-    (student) => student.id !== actionStudentId.value
-  );
+  
   actionStudentId.value = null;
   actionStudent.value = null;
   openedFormType.value = null;
@@ -99,8 +98,8 @@ const handleDeleteStudent = (): void => {
 };
 
 const filteredStudents = computed(() => {
-  if (status.value === studentStatuses.all) return localStudentsData.value;
-  return localStudentsData.value.filter(
+  if (status.value === studentStatuses.all) return studentsData.value;
+  return studentsData.value.filter(
     (student) =>
       student.status === status.value && student.name.includes(searchTerm.value)
   );
