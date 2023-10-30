@@ -65,7 +65,8 @@
 import { defineProps } from "vue";
 import { EStudentFormTypes, type ISelectOption, type IStudent } from "~/types";
 import { studentStatuses } from "~/constants/student";
-import * as pkg from "vue-toastification"; //workaround https://github.com/Maronato/vue-toastification/issues/327
+ // @ts-ignore
+import * as Toast from "vue-toastification/dist/index.mjs" //workaround https://github.com/Maronato/vue-toastification/issues/327
 
 interface Props {
   formType: EStudentFormTypes;
@@ -74,7 +75,7 @@ interface Props {
 }
 
 const { formType, student, toggleModal } = defineProps<Props>();
-const { useToast } = pkg;
+const { useToast } = Toast;
 const toast = useToast();
 const studentsData = useStudentsData();
 

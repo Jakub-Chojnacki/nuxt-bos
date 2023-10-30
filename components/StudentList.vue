@@ -27,7 +27,8 @@
 
 <script setup lang="ts">
 import { computed, defineProps } from "vue";
-import * as pkg from "vue-toastification"; //workaround https://github.com/Maronato/vue-toastification/issues/327
+ // @ts-ignore
+import * as Toast from "vue-toastification/dist/index.mjs" //workaround https://github.com/Maronato/vue-toastification/issues/327
 import { studentStatuses } from "~/constants/student";
 import type {
   EStudentFormTypes,
@@ -44,7 +45,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const { studentsData, status, searchTerm } = toRefs(props);
-const { useToast } = pkg;
+const { useToast } = Toast;
 
 const toast = useToast();
 
