@@ -1,19 +1,39 @@
 <template>
   <div class="student-list">
-    <StudentCard v-for="student in filteredStudents" :key="student.id" :student="student" @deleteStudent="handleOpenModal"
-      @openStudentForm="handleOpenForm" />
+    <StudentCard
+      v-for="student in filteredStudents"
+      :key="student.id"
+      :student="student"
+      @deleteStudent="handleOpenModal"
+      @openStudentForm="handleOpenForm"
+    />
   </div>
-  <DeleteStudentModal v-if="deleteModalActive" :modalActive="deleteModalActive" :toggleModal="toggleModal"
-    :handleConfirm="handleDeleteStudent" :student="actionStudent" />
-  <StudentFormModal v-if="formModalActive" :modalActive="formModalActive" :toggleModal="toggleFormModal"
-    :modalTitle="formModalTitle" :student="actionStudent" :formType="openedFormType" />
+  <DeleteStudentModal
+    v-if="deleteModalActive"
+    :modalActive="deleteModalActive"
+    :toggleModal="toggleModal"
+    :handleConfirm="handleDeleteStudent"
+    :student="actionStudent"
+  />
+  <StudentFormModal
+    v-if="formModalActive"
+    :modalActive="formModalActive"
+    :toggleModal="toggleFormModal"
+    :modalTitle="formModalTitle"
+    :student="actionStudent"
+    :formType="openedFormType"
+  />
 </template>
 
 <script setup lang="ts">
 import { computed, defineProps } from "vue";
-import { useToast } from "vue-toastification";
+import * as pkg from "vue-toastification"; //workaround https://github.com/Maronato/vue-toastification/issues/327
 import { studentStatuses } from "~/constants/student";
-import type { EStudentFormTypes, IStudent, IStudentFormOpenPayload } from "@/types";
+import type {
+  EStudentFormTypes,
+  IStudent,
+  IStudentFormOpenPayload,
+} from "@/types";
 
 interface Props {
   studentsData: IStudent[];
@@ -21,23 +41,25 @@ interface Props {
   searchTerm: string;
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
-const { studentsData, status, searchTerm } = toRefs(props)
-const toast = useToast()
+const { studentsData, status, searchTerm } = toRefs(props);
+const { useToast } = pkg;
 
-watch(studentsData, ()=> localStudentsData.value = studentsData.value)
+const toast = useToast();
+
+watch(studentsData, () => (localStudentsData.value = studentsData.value));
 
 const deleteModalActive = ref(false);
-const formModalActive = ref(false)
-const formModalTitle = ref("")
-const actionStudent = ref<IStudent | null>(null)
-const actionStudentId = ref<number | null>(null)
-const openedFormType = ref<EStudentFormTypes | null>(null)
+const formModalActive = ref(false);
+const formModalTitle = ref("");
+const actionStudent = ref<IStudent | null>(null);
+const actionStudentId = ref<number | null>(null);
+const openedFormType = ref<EStudentFormTypes | null>(null);
 
-const localStudentsData = ref<IStudent[]>(studentsData.value)
+const localStudentsData = ref<IStudent[]>(studentsData.value);
 
-const studentsDataGlobal = useStudentsData()
+const studentsDataGlobal = useStudentsData();
 
 const toggleModal = (): void => {
   deleteModalActive.value = !deleteModalActive.value;
@@ -46,39 +68,42 @@ const toggleModal = (): void => {
 const handleOpenModal = (student: IStudent): void => {
   actionStudentId.value = student.id;
   actionStudent.value = student;
-  toggleModal()
-}
+  toggleModal();
+};
 
 const handleOpenForm = ({ type, student }: IStudentFormOpenPayload) => {
-  formModalTitle.value = type === 'preview' ? 'Podgląd' : 'Edycja';
+  formModalTitle.value = type === "preview" ? "Podgląd" : "Edycja";
   actionStudent.value = student;
-  actionStudentId.value = student.id
+  actionStudentId.value = student.id;
   formModalActive.value = true;
-  openedFormType.value = type
-}
+  openedFormType.value = type;
+};
 
 const toggleFormModal = (): void => {
   formModalActive.value = !formModalActive.value;
 };
 
 const handleDeleteStudent = (): void => {
-  studentsDataGlobal.value = studentsDataGlobal.value.filter((student) => student.id !== actionStudentId.value)
-  localStudentsData.value = localStudentsData.value.filter((student) => student.id !== actionStudentId.value)
-  actionStudentId.value = null
-  actionStudent.value = null
-  openedFormType.value = null
-  toast.success('Dane o studencie zostały usunięte!')
-  toggleModal()
-}
+  studentsDataGlobal.value = studentsDataGlobal.value.filter(
+    (student) => student.id !== actionStudentId.value
+  );
+  localStudentsData.value = localStudentsData.value.filter(
+    (student) => student.id !== actionStudentId.value
+  );
+  actionStudentId.value = null;
+  actionStudent.value = null;
+  openedFormType.value = null;
+  toast.success("Dane o studencie zostały usunięte!");
+  toggleModal();
+};
 
 const filteredStudents = computed(() => {
   if (status.value === studentStatuses.all) return localStudentsData.value;
   return localStudentsData.value.filter(
-    (student) => student.status === status.value && student.name.includes(searchTerm.value)
+    (student) =>
+      student.status === status.value && student.name.includes(searchTerm.value)
   );
 });
-
-
 </script>
 
 <style lang="scss" scoped>
