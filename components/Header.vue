@@ -115,7 +115,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "@/assets/_variables.scss";
 
 @mixin hamburgerBar($bar-width: 100%) {
