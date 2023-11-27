@@ -67,6 +67,7 @@ export default {
 
     const isMenuOpen = ref<boolean>(false);
     const toggleMenu = (): void => {
+      document.body.style.overflowY = isMenuOpen.value ? "auto" : "hidden";
       isMenuOpen.value = !isMenuOpen.value;
     };
 
@@ -84,6 +85,25 @@ export default {
       return matchedItem ? matchedItem.name : null;
     });
 
+    const mdMediaQueryPx = 768;
+
+    // Update body overflow based on window width
+    const updateBodyOverflow = (): void => {
+      if (window.innerWidth > mdMediaQueryPx) {
+        document.body.style.overflowY = "auto";
+      } else if (window.innerWidth <= mdMediaQueryPx && isMenuOpen.value) {
+        document.body.style.overflowY = "hidden";
+      }
+    };
+
+    onMounted(() => {
+      window.addEventListener("resize", updateBodyOverflow);
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener("resize", updateBodyOverflow);
+    });
+
     return {
       isMenuOpen,
       toggleMenu,
@@ -95,7 +115,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@/assets/_variables.scss";
 
 @mixin hamburgerBar($bar-width: 100%) {
@@ -247,7 +267,7 @@ a.router-link-active {
       width: 100%;
       text-align: center;
       padding: 1em 0.5em;
-      border: 3px solid black;
+      border-bottom: 3px solid black;
       border-top: 0;
       text-decoration: none;
       text-transform: uppercase;
